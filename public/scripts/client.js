@@ -1,4 +1,4 @@
-var myApp = angular.module("myApp", ['ngRoute']);
+var myApp = angular.module("myApp", ['ngRoute', 'firebase']);
 
 myApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -32,6 +32,7 @@ myApp.controller('HomeController', function($firebaseAuth, $http) {
 
   self.message = "Home controller is the best!";
   self.logIn = function(){
+    console.log("you clicked on login");
     auth.$signInWithPopup("google").then(function(firebaseUser) {
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
     }).catch(function(error) {
