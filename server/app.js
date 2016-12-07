@@ -8,7 +8,6 @@ var privateData = require('./routes/private-data');
 var pgConnection = require('./modules/pg-connection');
 var mygames = require('./routes/mygames');
 var friendsgames = require('./routes/friendsgames');
-var about = require('./routes/about');
 var port = 3000;
 
 app.set("port", (process.env.PORT || port));

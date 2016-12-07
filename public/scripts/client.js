@@ -45,7 +45,7 @@ myApp.controller('MyGamesController', function() {
 });
 
 myApp.controller('FriendsGamesController', ["$http", function($http) {
-  console.log('lFriendsGamesController running');
+  console.log('FriendsGamesController running');
   var self = this;
   self.message = "FriendsGamesController is the best!";
   self.games = [];
