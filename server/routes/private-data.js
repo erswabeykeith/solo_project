@@ -7,7 +7,7 @@ router.get('/', function(req, res){
   pg.connect(connectionString, function(err, client, done){
   console.log('req.decodedToken: ', req.decodedToken);
     var userEmail = req.decodedToken.email;
-    client.query('SELECT clearance_level FROM users WHERE email=$1', [userEmail], function(err, clearanceLevelQueryResult){
+    client.query('SELECT * ' + 'FROM games ' + 'JOIN users_games ON games.id = users_games.game_id ' + 'JOIN users ON users.id = users_games.user_id ' + 'WHERE users.email=$1;', [userEmail], function(err, clearanceLevelQueryResult){
       done();
       if(err){
         console.log('Error completing clearancelevel query task', err);
@@ -19,9 +19,10 @@ router.get('/', function(req, res){
             res.sendStatus(403);
           } else {
             var clearanceLevel = clearanceLevelQueryResult.rows[0].clearance_level;
-            log('clearanceLevel: ', clearanceLevel);
+            console.log('clearanceLevel: ', clearanceLevel);
             //a lot can be added here
           }
+          res.send(result.rows);
           done();
         });
       }
