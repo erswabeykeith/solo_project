@@ -25,9 +25,10 @@ app.get('/', function(req, res) {
 
 app.use(decoder.token);
 
+app.use('/privateData', privateData);
 app.use('/mygames', mygames);
 app.use('/friendsgames', friendsgames);
-app.use('/privateData', privateData);
+
 
 
 
