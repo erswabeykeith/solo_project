@@ -31,45 +31,65 @@ myApp.controller('HomeController', function($firebaseAuth, $http) {
   self.newUser = {};
 
   self.message = "Home controller is the best!";
+
   self.logIn = function(){
     console.log("you clicked on login");
     auth.$signInWithPopup("google").then(function(firebaseUser) {
-      console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
-    }).catch(function(error) {
-      console.log("Authentication failed: ", error);
-    });
-  };
-
-  auth.$onAuthStateChanged(function(firebaseUser){
-      self.currentUser = firebaseUser;
       if(firebaseUser) {
-        firebaseUser.getToken().then(function(idToken){
+        firebaseUser.user.getToken().then(function(idToken){
           $http({
             method: 'GET',
             url: '/privateData',
             headers: {
               id_token: idToken
             }
-          }).then(function(response){
+          })
+          .then(function(response){
             self.secretData = response.data;
+            console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
+          })
+          .catch(function(error) {
+            console.log("Authentication failed: ", error);
+            self.secretData = [];
           });
         });
-      } else {
+
+
+      }
+      else {
         console.log('Not logged in or authorized');
-        self.secretData = [];
       }
     });
+  }; // end self.logIn
+
+  auth.$onAuthStateChanged(function(firebaseUser){
+    self.currentUser = firebaseUser;
+    if(firebaseUser) {
+    } else {
+      console.log('Not logged in or authorized')
+    }
+  });
 });
 
 myApp.controller('MyGamesController', function() {
-  console.log('MyGamesController running');
+  console.log('mygames controller running');
   var self = this;
   self.message = "MyGamesController is the best!";
+
+
+
+  // function getGames() {
+  //   $http.get('/friendsgames')
+  //   .then(function(response) {
+  //     console.log('response.data: ', response.data);
+  //     self.games = response.data;
+  //   });
+  // }
 
 });
 
 myApp.controller('FriendsGamesController', ["$http", function($http) {
-  console.log('FriendsGamesController running');
+  console.log('friendsgamescontroller running');
   var self = this;
   self.message = "FriendsGamesController is the best!";
   self.games = [];
@@ -78,9 +98,9 @@ myApp.controller('FriendsGamesController', ["$http", function($http) {
 
   function getGames() {
     $http.get('/friendsgames')
-      .then(function(response) {
-        console.log('response.data: ', response.data);
-        self.games = response.data;
-      });
-    }
+    .then(function(response) {
+      console.log('response.data: ', response.data);
+      self.games = response.data;
+    });
+  }
 }]);
