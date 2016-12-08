@@ -8,7 +8,7 @@ router.get('/', function(req, res){
   pg.connect(connectionString, function(err, client, done){
   // console.log('req.decodedToken: ', req.decodedToken);
     var userEmail = req.decodedToken.email;
-    client.query('SELECT user ' + 'FROM users ' + 'WHERE users.email=$1;', [userEmail], function(err, results){
+    client.query('SELECT email ' + 'FROM users ' + 'WHERE users.email=$1;', [userEmail], function(err, results){
       done();
       if(err){
         console.log('Error', err);
