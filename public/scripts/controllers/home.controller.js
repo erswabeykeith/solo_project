@@ -35,8 +35,9 @@ myApp.controller('HomeController', ['$http', '$firebaseAuth', 'DataFactory', fun
   });
 
   self.logOut = function() {
+    console.log('logged out');
     auth.$signOut().then(function(){
-      console.log('logged out');
+
     });
   };
 
