@@ -5,12 +5,12 @@
       <form id="mygamesForm">
         <label for="game">Game: </label>
         <input type="text" id="game" name="game" ng-model="mygames.newGame.game" />
-        <label for="monthly_limit">Number of Players: </label>
-        <input type="text" id="monthly_limit" name="monthly_limit" ng-model="mygames.newGame.monthly_limit" />
-        <label for="monthly_limit">Playing Time: </label>
-        <input type="text" id="monthly_limit" name="monthly_limit" ng-model="mygames.newGame.monthly_limit" />
-        <label for="monthly_limit">Is it an Expansion?: </label>
-        <input type="text" id="monthly_limit" name="monthly_limit" ng-model="mygames.newGame.monthly_limit" />
+        <label for="number_players">Number of Players: </label>
+        <input type="text" id="number_players" name="number_players" ng-model="mygames.newGame.number_players" />
+        <label for="time_to_play">Playing Time: </label>
+        <input type="text" id="time_to_play" name="time_to_play" ng-model="mygames.newGame.time_to_play" />
+        <label for="expansion">Is it an Expansion?: </label>
+        <input type="text" id="expansion" name="expansion" ng-model="mygames.newGame.expansion" />
         <button ng-click="mygames.addGame()">Add Game</button>
       </form>
     </div>

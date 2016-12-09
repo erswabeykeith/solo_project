@@ -4,9 +4,8 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var decoder = require('./modules/decoder');
-var privateData = require('./routes/private-data');
 var pgConnection = require('./modules/pg-connection');
-var mygames = require('./routes/mygames');
+var myGames = require('./routes/my-games');
 var friendsgames = require('./routes/friendsgames');
 var port = 3000;
 
@@ -25,8 +24,7 @@ app.get('/', function(req, res) {
 
 app.use(decoder.token);
 
-app.use('/privateData', privateData);
-app.use('/mygames', mygames);
+app.use('/myGames', myGames);
 app.use('/friendsgames', friendsgames);
 
 
