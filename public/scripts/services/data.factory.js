@@ -17,7 +17,7 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
   // Get all the games from the server
   function getGames() {
     console.log('factory getting games');
-    if(firebaseUser) {
+    if(currentUser) {
       firebaseUser.getToken().then(function(idToken){
         $http({
           method: 'GET',
@@ -38,7 +38,7 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
 // Get all the games from the server again after a new one has been added
   function updateGames() {
     console.log('factory getting games again');
-    if(firebaseUser) {
+    if(currentUser) {
       firebaseUser.getToken().then(function(idToken){
         $http({
           method: 'GET',

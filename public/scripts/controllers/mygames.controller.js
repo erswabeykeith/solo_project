@@ -8,7 +8,7 @@ myApp.controller('MyGamesController', ['$http', '$firebaseAuth', 'DataFactory', 
 
   function getGames() {
     // does the factory have data?
-    if(DataFactory.gameData() === undefined) {
+    if(DataFactory.gameData() === '') {
       // have the factory go get the data and let us know when it's done
       DataFactory.updateGames().then(function(response){
         self.games = DataFactory.gameData();
