@@ -1,0 +1,34 @@
+<h2>My Games</h2>
+{{mygames.factoryd}}
+<div>
+  <div>
+      <form id="mygamesForm">
+        <label for="game">Game: </label>
+        <input type="text" id="game" name="game" ng-model="mygames.newGame.game" />
+        <label for="monthly_limit">Number of Players: </label>
+        <input type="text" id="monthly_limit" name="monthly_limit" ng-model="mygames.newGame.monthly_limit" />
+        <label for="monthly_limit">Playing Time: </label>
+        <input type="text" id="monthly_limit" name="monthly_limit" ng-model="mygames.newGame.monthly_limit" />
+        <label for="monthly_limit">Is it an Expansion?: </label>
+        <input type="text" id="monthly_limit" name="monthly_limit" ng-model="mygames.newGame.monthly_limit" />
+        <button ng-click="mygames.addGame()">Add Game</button>
+      </form>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <th>Game</th>
+          <th>Number of Players</th>
+          <th>Playing Time</th>
+          <th>Is it an Expansion?</th>
+        </tr>
+        <tr ng-repeat="game in mygames.games">
+          <td>{{game.game}}</td>
+          <td>{{game.number_players}}</td>
+          <td>{{game.time_to_play}}</td>
+          <td>{{game.expansion}}</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>

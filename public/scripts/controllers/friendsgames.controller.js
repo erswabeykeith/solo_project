@@ -1,4 +1,4 @@
-myApp.controller('FriendsGamesController', ["$http", 'DataFactory', function($http) {
+myApp.controller('FriendsGamesController', ['$http', '$firebaseAuth', 'DataFactory', function($http, $firebaseAuth, DataFactory) {
   console.log('friendsgamescontroller running');
   var self = this;
   self.message = "FriendsGamesController is the best!";
