@@ -7,6 +7,10 @@ h2 {
   margin: 50px auto;
 }
 
+.jumbotron {
+	text-align: center;
+}
+
 .table {
   width: 80%;
   margin: 50px auto;
