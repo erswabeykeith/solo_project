@@ -1,0 +1,53 @@
+body {
+	font-family: Tahoma, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin: 50px auto;
+}
+
+.table {
+  width: 80%;
+  margin: 50px auto;
+  border-collapse: collapse;
+}
+
+tr, th, td {border: 1px solid black;}
+tr:nth-of-type(odd) {background-color: #ccc;}
+tr:nth-of-type(even) {background-color: #eee;}
+td:last-child, td:nth-last-child(2) {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+th {
+  background-color: white;
+  font-size: 1.2em;
+}
+
+#mygamesForm {
+	padding: 20px;
+	margin: 10px;
+	background-color: #ccc;
+	border: 1px solid teal;
+	line-height: 40px;
+}
+
+#mygamesForm label {
+	font-weight: bold;
+	margin-left: 6px;
+}
+
+#friendsgamesForm {
+	padding: 20px;
+	margin: 10px;
+	background-color: #ccc;
+	border: 1px solid teal;
+	line-height: 40px;
+}
+
+#friendsgamesForm label {
+	font-weight: bold;
+	margin-left: 6px;
+}

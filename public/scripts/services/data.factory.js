@@ -35,6 +35,26 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
     }
   };
 
+  function addGame() {
+    console.log('factory getting games');
+    if(currentUser) {
+      firebaseUser.getToken().then(function(idToken){
+        $http({
+          method: 'POST',
+          url: '/myGames',
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          gameData = response.data;
+        });
+      });
+    } else {
+      console.log('Not logged in or authorized');
+      gameData = undefined;
+    }
+  };
+
 // Get all the games from the server again after a new one has been added
   function updateGames() {
     console.log('factory getting games again');
