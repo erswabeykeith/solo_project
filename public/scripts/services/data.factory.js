@@ -1,13 +1,14 @@
 myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, $http) {
   console.log("factory running");
 
-  var currentUser = undefined;
+  var currentUser = {};
   var auth = $firebaseAuth();
   var gameData = undefined;
 
 
   function logIn() {
     return auth.$signInWithPopup("google").then(function(firebaseUser) {
+      currentUser = firebaseUser;
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
@@ -18,7 +19,7 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
   function getGames() {
     console.log('factory getting games');
     if(currentUser) {
-      firebaseUser.getToken().then(function(idToken){
+      currentUser.user.getToken().then(function(idToken){
         $http({
           method: 'GET',
           url: '/myGames',
@@ -34,19 +35,26 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
       gameData = undefined;
     }
   };
-
-  function addGame() {
+//Add a Game
+  function addGame(newGame) {
     console.log('factory getting games');
+    console.log(currentUser);
+    console.log(newGame);
     if(currentUser) {
-      firebaseUser.getToken().then(function(idToken){
+      return currentUser.getToken().then(function(idToken){
+        console.log("here");
+        console.log(newGame);
         $http({
           method: 'POST',
           url: '/myGames',
+          data: newGame,
           headers: {
             id_token: idToken
           }
         }).then(function(response){
+          console.log(newGame);
           gameData = response.data;
+          console.log(newGame);
         });
       });
     } else {
@@ -83,8 +91,9 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
     });
   };
 
+//This is the only function that works
   auth.$onAuthStateChanged(function(firebaseUser){
-    // self.currentUser = firebaseUser;
+    currentUser = firebaseUser;
     if(firebaseUser) {
       firebaseUser.getToken().then(function(idToken){
         $http({
