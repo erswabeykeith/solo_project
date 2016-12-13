@@ -4,7 +4,7 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
   var currentUser = {};
   var auth = $firebaseAuth();
   var gameData = undefined;
-
+  //updateGames();
 
   function logIn() {
     return auth.$signInWithPopup("google").then(function(firebaseUser) {
