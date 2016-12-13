@@ -57,58 +57,59 @@ router.post('/', function(req, res) {
           res.sendStatus(500);
           return;
         } else {
-          console.log('successfully inserted game');
-          gameId = results.rows[0].id;
-          console.log('This is the gameId', gameId);
-        } //end of else
-      });//end of query
-
-      console.log(userEmail);
-      //Find the user id that matches the user email that is logged in
-      client.query(
-        'SELECT id FROM users WHERE email=$1;', [userEmail], function(err, results){
-        done();
-        if(err){
-          console.log('Error', err);
-          res.sendStatus(500);
-          return;
-        } else {
-          if(results.rowCount === 0) {
-            console.log('No user found with that email. Email: ', req.decodedToken.email);
-            res.sendStatus(403);
-            return;
-          } else {
-            console.log(results.rows);
-            userId = results.rows[0].id;
-            console.log('This is the userId', userId);
-            client.query(
-              'INSERT INTO users_games(game_id, user_id) ' + 'VALUES ($1, $2)',
-              [gameId, userId],
-              function(err, result) {
-                done();
-                console.log('new game game id', gameId);
-                console.log('new game user id', userId);
-                if(err) {
-                  console.log('insert query error: ', err);
-                  res.sendStatus(500);
+          console.log(userEmail);
+          //Find the user id that matches the user email that is logged in
+          client.query(
+            'SELECT id FROM users WHERE email=$1;', [userEmail], function(err, results){
+              done();
+              if(err){
+                console.log('Error', err);
+                res.sendStatus(500);
+                return;
+              } else {
+                if(results.rowCount === 0) {
+                  console.log('No user found with that email. Email: ', req.decodedToken.email);
+                  res.sendStatus(403);
                   return;
                 } else {
-                  res.sendStatus(201);
-                } //end of else
-              });//end of query
-          }
-        }  //end of else
-      });  //end of query
+                  console.log(results.rows);
+                  userId = results.rows[0].id;
+                  console.log('This is the userId', userId);
+                  client.query(
+                    'INSERT INTO users_games(game_id, user_id) ' + 'VALUES ($1, $2)',
+                    [gameId, userId],
+                    function(err, result) {
+                      done();
+                      console.log('new game game id', gameId);
+                      console.log('new game user id', userId);
+                      if(err) {
+                        console.log('insert query error: ', err);
+                        res.sendStatus(500);
+                        return;
+                      } else {
+                        res.sendStatus(201);
+                      } //end of else
+                    });//end of query
+                  }
+                }  //end of else
+              });  //end of query
 
-      //Insert the matching ids into the users_games table
+              console.log('successfully inserted game');
+              gameId = results.rows[0].id;
+              console.log('This is the gameId', gameId);
+            } //end of else
+          });//end of query
+
+
+          //Insert the matching ids into the users_games table
 
 
 
-  });  //end of pg post connect
+        });  //end of pg post connect
 
-});  //end of post request
-
-
+      });  //end of post request
 
 
-module.exports = router;
+
+
+      module.exports = router;
