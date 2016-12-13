@@ -1,14 +1,14 @@
 myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, $http) {
   console.log("factory running");
 
-  var currentUser = {};
+  var currentUser = null;
   var auth = $firebaseAuth();
   var gameData = undefined;
   //updateGames();
 
   function logIn() {
     return auth.$signInWithPopup("google").then(function(firebaseUser) {
-      currentUser = firebaseUser;
+      // currentUser = firebaseUser;
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
     }).catch(function(error) {
       console.log("Authentication failed: ", error);
@@ -17,9 +17,9 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
 
   // Get all the games from the server
   function getGames() {
-    console.log('factory getting games');
+    console.log('getting games');
     if(currentUser) {
-      currentUser.user.getToken().then(function(idToken){
+      currentUser.getToken().then(function(idToken){
         $http({
           method: 'GET',
           url: '/myGames',
@@ -37,7 +37,7 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
   };
 //Add a Game
   function addGame(newGame) {
-    console.log('factory getting games');
+    console.log('adding a game');
     console.log(currentUser);
     console.log(newGame);
     if(currentUser) {
@@ -55,19 +55,23 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
           console.log(newGame);
           gameData = response.data;
           console.log(newGame);
+          return response.data;
         });
       });
+
     } else {
       console.log('Not logged in or authorized');
       gameData = undefined;
+      return 'potato';
     }
   };
 
 // Get all the games from the server again after a new one has been added
   function updateGames() {
     console.log('factory getting games again');
+    console.log('The current user is:', currentUser);
     if(currentUser) {
-      firebaseUser.getToken().then(function(idToken){
+      return currentUser.getToken().then(function(idToken){
         $http({
           method: 'GET',
           url: '/myGames',
@@ -76,11 +80,14 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
           }
         }).then(function(response){
           gameData = response.data;
+          console.log(response.data);
+          return gameData;
         });
       });
     } else {
       console.log('Not logged in or authorized');
       gameData = undefined;
+      return;
     }
   };
 

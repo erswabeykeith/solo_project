@@ -8,17 +8,18 @@ myApp.controller('MyGamesController', ['$http', '$firebaseAuth', 'DataFactory', 
 
   function getGames() {
     // does the factory have data?
-    if(DataFactory.gameData() === '') {
+    // if(DataFactory.gameData() === '') {
       // have the factory go get the data and let us know when it's done
       DataFactory.updateGames().then(function(response){ //was updateGames
+        console.log('This is the datafactory respoonse from updateGames', response);
         self.games = DataFactory.gameData();
         console.log("Controller got stuff from the factory: ", self.games);
       });
-    } else {
-      // Factory already has data, let's use it
-      self.games = DataFactory.gameData();
-      console.log("using current data");
-    }
+    // } else {
+    //   // Factory already has data, let's use it
+    //   self.games = DataFactory.gameData();
+    //   console.log("using current data");
+    // }
 
   } //end getgames function
 
@@ -28,8 +29,9 @@ myApp.controller('MyGamesController', ['$http', '$firebaseAuth', 'DataFactory', 
   console.log(self.newGame);
   DataFactory.addGame(self.newGame)
   .then(function(response) {
-      console.log('controller add game response ', response);
-      self.games = DataFactory.gameData(); //timing adjust
+    getGames();
+  //     console.log('controller add game response ', response);
+  //     self.games = DataFactory.gameData(); //timing adjust
     });
   }
 
