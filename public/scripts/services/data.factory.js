@@ -4,7 +4,7 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
   var currentUser = null;  //currentUser is set to null
   var auth = $firebaseAuth(); //auth is set to firebaseAuth
 
-//Log in function
+  //Log in function
   function logIn() { //function logIn is declared (which will be triggered when the login button is clicked on the view)
     return auth.$signInWithPopup("google").then(function(firebaseUser) { //retun the auth popup window with google then pass the firebase user in as a parameter for the function
       console.log("Firebase Authenticated as: ", firebaseUser.user.displayName); //display the firebase user name
@@ -42,10 +42,47 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
             id_token: idToken
           }
         }).then(function(response){ //then when done, use the response as a parameter in the function
-          return response.data; //then when done, use the response as a parameter in the function
+          return response.data; //return data of response
         });
       });
-    } else { //if not
+    } else { //if not logged in as user from log
+      console.log('Not logged in or authorized');  //log this
+    }
+  };
+
+  // Get all friends' games from the server
+  function getFriendsGames() {  //function getGames is displayed
+    console.log('getting friends games');
+    return currentUser.getToken().then(function(idToken){ //return the token of the current user and when done, pass that token to the function as a parameter
+      return $http({  //return the get request
+        method: 'GET',  //using GET
+        url: '/friendsgames',
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){ //then when done, use the response as a parameter in the function
+        return response.data; //then when done, use the response as a parameter in the function
+      });
+    });
+  };
+
+  //Add a friend's Game
+  function addFriendsGame(newGame) { //function addGame is declared and is passed the parameter of new game
+    console.log("Adding friend's game: ", newGame) //log the new game
+    if(currentUser) {  //if logged in as the user from the login
+      return currentUser.getToken().then(function(idToken){ //return the token of that user and pass it to the function as a parameter
+        return $http({  //return the post request
+          method: 'POST',  //using POST
+          url: '/friendsgames',
+          data: newGame,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){ //then when done, use the response as a parameter in the function
+          return response.data; //return data of response
+        });
+      });
+    } else { //if not logged in as user from log
       console.log('Not logged in or authorized');  //log this
     }
   };
@@ -58,30 +95,40 @@ myApp.factory('DataFactory', ['$firebaseAuth', '$http', function($firebaseAuth, 
 
   auth.$onAuthStateChanged(function(firebaseUser){  //auth state changed function declared and passed parameter firebase user
     currentUser = firebaseUser; //set currentUser equal to firebaseUser
-    if(!firebaseUser) { //if it doesn't match
-      console.log('Not logged in or authorized');  //then display this console log
-    }
-  });
+    if(!firebaseUser) { // if firebaseuer is null or undefined (isn't an object) run next line of code
+    console.log('Not logged in or authorized');  //then display this console log
+  }
+});
+
+
 
 //Shares functions so they can be accessible to controllers
-  var api = {
-    logIn: function() {
-      return logIn();
-    },
-    addGame: function(newGame) {
-      // return our Promise to the Controller!
-      return addGame(newGame)
-    },
-    getGames: function() {
-      // return our Promise to the Controller!
-      return getGames();
-    },
-    logOut: function() {
-      return logOut();
-    }
-  };
+var api = {
+  logIn: function() {
+    return logIn();  //return what the login function returns
+  },
+  getGames: function() {
+    // return our Promise to the Controller!
+    return getGames();
+  },
+  addGame: function(newGame) {
+    // return our Promise to the Controller!
+    return addGame(newGame)
+  },
+  getFriendsGames: function() {
+    // return our Promise to the Controller!
+    return getFriendsGames();
+  },
+  addFriendsGame: function(newGame) {
+    // return our Promise to the Controller!
+    return addFriendsGame(newGame)
+  },
+  logOut: function() {
+    return logOut();
+  }
+};
 
-  return api;
+return api; //Factory shares this api function
 
 
 }]);

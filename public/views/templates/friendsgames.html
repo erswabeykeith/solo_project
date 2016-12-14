@@ -5,26 +5,28 @@
         <label for="game">Game: </label>
         <input type="text" id="game" name="game" ng-model="friendsgames.newGame.game" />
         <label for="game">Owned By: </label>
-        <input type="text" id="game" name="game" ng-model="friendsgames.newGame.game" />
+        <input type="text" id="owned_by" name="owned_by" ng-model="friendsgames.newGame.owned_by" />
         <label for="game">Location: </label>
-        <input type="text" id="game" name="game" ng-model="friendsgames.newGame.game" />
+        <input type="text" id="location" name="location" ng-model="friendsgames.newGame.location" />
         <label for="number_players">Number of Players: </label>
         <input type="text" id="number_players" name="number_players" ng-model="friendsgames.newGame.number_players" />
         <label for="time_to_play">Playing Time: </label>
         <input type="text" id="time_to_play" name="time_to_play" ng-model="friendsgames.newGame.time_to_play" />
         <label for="expansion">Is it an Expansion?: </label>
         <input type="text" id="expansion" name="expansion" ng-model="friendsgames.newGame.expansion" />
-        <button ng-click="friendsgames.addGame()">Add Game</button>
+        <button ng-click="friendsgames.addFriendsGame()">Add Game</button>
       </form>
     </div>
     <h2>Games My Friends Own</h2>
-    {{mygames.factoryd}}
+    <!-- {{mygames.factoryd}} -->
     <div>
       <table class="table" ng-model="myfriendsgames">
         <thead>
         <tr>
-          <th>Game</th>
-          <th>Number of Players</th>
+          <th>Game:</th>
+          <th>Owned by:</th>
+          <th>Location:</th>
+          <th>Number of Players:</th>
           <th>Playing Time</th>
           <th>Is it an Expansion?</th>
         </tr>
@@ -32,10 +34,11 @@
         <tbody>
         <tr ng-repeat="game in friendsgames.games">
           <td>{{game.game}}</td>
+          <td>{{game.owned_by}}</td>
+          <td>{{game.location}}</td>
           <td>{{game.number_players}}</td>
           <td>{{game.time_to_play}}</td>
           <td>{{game.expansion}}</td>
-          <td></td>
         </tr>
         </tbody>
       </table>

@@ -1,22 +1,22 @@
 //firebase, datafactory, http, and scope are injected. Scope has properties and injecting it here makes the HTML view available to the controller
 myApp.controller('MyGamesController', ['$http', '$firebaseAuth', 'DataFactory', '$scope', function ($http, $firebaseAuth, DataFactory, $scope) {
   console.log('mygamescontroller running');
-  var self = this;  //the game we most recently entered
-  self.newGame = {} //the game entered has a property of newGame and is currently equal to an empty object
+  var self = this;  //what we are working with (the controller)
+  self.newGame = {} //the controller has a property of newGame and is currently equal to an empty object
   self.games = [];  //the object entered will be part of the games array which is currently empty
 
   getGames(); //getGames function is called here
 
   function getGames() { //getGames function declared here
-        DataFactory.getGames().then(function (response) { //getGames from the datafactory and then when done, give us the response
-          console.log('returned to controller from factory', response); //can see what the response is here
-          self.games = response; //set our empty object equal to the response we got
-          $scope.$apply(); //apply this to the scope so it is accessible in the HTML view
-        });
+    DataFactory.getGames().then(function (response) { //getGames from the datafactory and then when done, give us the response
+      console.log('returned to controller from factory', response); //can see what the response is here
+      self.games = response; //set our empty array equal to the response we got
+      $scope.$apply(); //apply this to the scope so it is accessible in the HTML view
+    });
   } //end getgames function
 
 
-  self.addGame = function () {  //the game that we just added has a property of addGame which is equal to a function
+  self.addGame = function () {  //the controller has a property of addGame which is equal to a function
     DataFactory.addGame(self.newGame).then(getGames);  //This function applies addGame to the datafactory and adds the game we put in and when it is done, the getGames function is called
   }
 
