@@ -5,9 +5,9 @@
         <label for="game">Game: </label>
         <input type="text" id="game" name="game" ng-model="friendsgames.newGame.game" />
         <label for="game">Owned By: </label>
-        <input type="text" id="owned_by" name="owned_by" ng-model="friendsgames.newGame.owned_by" />
+        <input type="text" id="friend" name="friend" ng-model="friendsgames.newGame.friend" />
         <label for="game">Location: </label>
-        <input type="text" id="location" name="location" ng-model="friendsgames.newGame.location" />
+        <input type="text" id="lives_in" name="lives_in" ng-model="friendsgames.newGame.lives_in" />
         <label for="number_players">Number of Players: </label>
         <input type="text" id="number_players" name="number_players" ng-model="friendsgames.newGame.number_players" />
         <label for="time_to_play">Playing Time: </label>
@@ -34,8 +34,8 @@
         <tbody>
         <tr ng-repeat="game in friendsgames.games">
           <td>{{game.game}}</td>
-          <td>{{game.owned_by}}</td>
-          <td>{{game.location}}</td>
+          <td>{{game.friend}}</td>
+          <td>{{game.lives_in}}</td>
           <td>{{game.number_players}}</td>
           <td>{{game.time_to_play}}</td>
           <td>{{game.expansion}}</td>

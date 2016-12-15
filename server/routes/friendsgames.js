@@ -10,9 +10,10 @@ router.get('/', function(req, res){
   pg.connect(connectionString, function(err, client, done){
     // console.log('req.decodedToken: ', req.decodedToken);
     var userEmail = req.decodedToken.email;
-    client.query('SELECT * FROM games ' +
-    'JOIN users_games ON games.id = users_games.game_id ' +
-    'JOIN users ON users.id = users_games.user_id ' + 'WHERE users.email=$1;', [userEmail], function(err, results){
+    client.query('SELECT * FROM users ' +
+    'JOIN users_friends ON users_friends.user_id = users.id ' +
+    'JOIN friends ON friends.id = users_friends.friend_id ' + 'JOIN friends_games ON friends_games.friend_id = friends.id ' +
+    'JOIN games ON games.id = friends_games.game_id ' + 'WHERE users.email=$1;', [userEmail], function(err, results){
       done();
       if(err){
         console.log('Error', err);
